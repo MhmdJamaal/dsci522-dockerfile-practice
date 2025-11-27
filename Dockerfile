@@ -1,11 +1,9 @@
 # Extend the required minimal-notebook image
 FROM quay.io/jupyter/minimal-notebook:afe30f0c9ad8
 
-# Switch to root to install dependencies
-USER root
 
 # Copy the conda lock file into the container
-COPY conda-linux-64.lock conda-linux-64.lock
+COPY conda-linux-64.lock /tmp/conda-linux-64.lock
 
 
 # Create environment from the explicit conda lock file

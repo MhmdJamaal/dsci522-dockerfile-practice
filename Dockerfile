@@ -1,14 +1,11 @@
 # Extend the required minimal-notebook image
-FROM quay.io/jupyter/minimal-notebook:afe30f0c9ad8
+FROM quay.io/jupyter/minimal-notebook
 
 
-# Copy the conda lock file into the container
-COPY conda-linux-64.lock /tmp/conda-linux-64.lock
+# copy the lockfile into the container
+COPY conda-linux-64.lock /home/conda-linux-64.lock
 
-
-# Create environment from the explicit conda lock file
-RUN conda update --quiet --file /tmp/conda-linux-64.lock \
-	&& conda clean --all -y -f \
+RUN mamba install --quiet --file /home/conda-linux-64.lock \
+	&& mamba clean --all -y -f \
 	&& fix-permissions "${CONDA_DIR}" \
-	&& fix-permissions "/home/${NB_USER}"
- 
+	&& fix-permissions "/home/${NB_USER}" 
